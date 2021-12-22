@@ -75,6 +75,7 @@ class Tooltip extends Component {
     useReactNativeModal: true,
     topAdjustment: 0,
     accessible: true,
+    alignChildInTooltip: true,
   };
 
   static propTypes = {
@@ -105,6 +106,7 @@ class Tooltip extends Component {
     useReactNativeModal: PropTypes.bool,
     topAdjustment: PropTypes.number,
     accessible: PropTypes.bool,
+    alignChildInTooltip: PropTypes.bool,
   };
 
   constructor(props) {
@@ -377,8 +379,8 @@ class Tooltip extends Component {
               width,
               top: y,
               left: x,
-              alignItems: 'center',
-              justifyContent: 'center',
+              alignItems: this.props.alignChildInTooltip ? 'center' : undefined,
+              justifyContent: this.props.alignChildInTooltip ? 'center' : undefined,
             },
             this.props.childrenWrapperStyle,
           ]}

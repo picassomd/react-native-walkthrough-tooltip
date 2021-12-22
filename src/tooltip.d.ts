@@ -126,6 +126,8 @@ declare module 'react-native-walkthrough-tooltip' {
 
     /** Will use given component instead of default react-native Modal component **/
     modalComponent?: object;
+
+    alignChildInTooltip: boolean;
   }
 
   /**
