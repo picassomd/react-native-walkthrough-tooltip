@@ -24,6 +24,15 @@ declare module 'react-native-walkthrough-tooltip' {
     right: number;
   }
 
+  export class Rect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+
+    constructor(x: number, y: number, width: number, height: number);
+  }
+
   /**
    * Style Props
    * The tooltip styles should work out-of-the-box for most use cases,
@@ -127,7 +136,11 @@ declare module 'react-native-walkthrough-tooltip' {
     /** Will use given component instead of default react-native Modal component **/
     modalComponent?: object;
 
-    alignChildInTooltip: boolean;
+    alignChildInTooltip?: boolean;
+
+    childOverride?: Rect;
+
+    closeOnBackdrop?: boolean;
   }
 
   /**

@@ -76,6 +76,7 @@ class Tooltip extends Component {
     topAdjustment: 0,
     accessible: true,
     alignChildInTooltip: true,
+    closeOnBackdrop: true,
   };
 
   static propTypes = {
@@ -107,6 +108,8 @@ class Tooltip extends Component {
     topAdjustment: PropTypes.number,
     accessible: PropTypes.bool,
     alignChildInTooltip: PropTypes.bool,
+    childOverride: PropTypes.shape(Rect),
+    closeOnBackdrop: PropTypes.bool,
   };
 
   constructor(props) {
@@ -266,6 +269,10 @@ class Tooltip extends Component {
     const doMeasurement = () => {
       if (!this.isMeasuringChild) {
         this.isMeasuringChild = true;
+        if (this.props.childOverride) {
+          this.onChildMeasurementComplete(this.props.childOverride);
+          return;
+        }
         if (
           this.childWrapper.current &&
           typeof this.childWrapper.current.measure === 'function'
@@ -414,7 +421,7 @@ class Tooltip extends Component {
 
     return (
       <TouchableWithoutFeedback
-        onPress={this.props.onClose}
+        onPress={onPressContent}
         accessible={this.props.accessible}
       >
         <View style={generatedStyles.containerStyle}>
@@ -454,13 +461,19 @@ class Tooltip extends Component {
     const showTooltip = isVisible && !this.state.waitingForInteractions;
     const ModalComponent = modalComponent || Modal;
 
+    const onClose = () => {
+      if (this.props.closeOnBackdrop) {
+        this.props.onClose();
+      }
+    };
+
     return (
       <React.Fragment>
         {useReactNativeModal ? (
           <ModalComponent
             transparent
             visible={showTooltip}
-            onRequestClose={this.props.onClose}
+            onRequestClose={onClose}
             supportedOrientations={this.props.supportedOrientations}
           >
             {this.renderContentForTooltip()}
@@ -483,3 +496,4 @@ class Tooltip extends Component {
 }
 
 export default Tooltip;
+export { Rect };
