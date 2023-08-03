@@ -141,6 +141,8 @@ declare module 'react-native-walkthrough-tooltip' {
     childOverride?: Rect;
 
     closeOnBackdrop?: boolean;
+
+    children?: React.ReactNode;
   }
 
   /**
